@@ -1,6 +1,8 @@
 package com.brainstormapp.productservicemarch2025.controller;
 
 import com.brainstormapp.productservicemarch2025.DTO.createProductDTO;
+import com.brainstormapp.productservicemarch2025.exceptions.ProductListIsEmptyException;
+import com.brainstormapp.productservicemarch2025.exceptions.ProductNotFoundException;
 import com.brainstormapp.productservicemarch2025.model.Product;
 import com.brainstormapp.productservicemarch2025.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,20 +22,30 @@ public class ProductController {
     }
 
     @GetMapping("/products/{id}")
-    public Product getProductById(@PathVariable Integer id) {
+    public Product getProductById(@PathVariable Integer id) throws ProductNotFoundException {
 
         //Null pointer exception handling
         if (id == 1000) {
             throw new IllegalArgumentException("id cannot be null");
         }
 
-        return service.getProductById(id);
+        Product product = service.getProductById(id); // service = new SelfProductService()
+        if (product == null) {
+            throw new IllegalArgumentException("Product not found");
+        }
+
+        return product;
     }
 
     @GetMapping("/products")
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts() throws ProductListIsEmptyException{
 
-        return service.getAllProducts();
+        List<Product> response = service.getAllProducts();
+        if (response == null) {
+            throw new ProductListIsEmptyException("Product list is empty");
+        }
+
+        return response;
     }
 
     @PostMapping("/products")
