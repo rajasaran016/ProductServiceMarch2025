@@ -19,4 +19,5 @@ public class BaseModel {
     private Date createdAt;
     private Date updatedAt;
     private boolean deleted;
+    private String createdByUserName;
 }

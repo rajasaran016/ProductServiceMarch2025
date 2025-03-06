@@ -2,8 +2,9 @@ package com.brainstormapp.productservicemarch2025.controller;
 
 import com.brainstormapp.productservicemarch2025.DTO.createProductDTO;
 import com.brainstormapp.productservicemarch2025.model.Product;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.brainstormapp.productservicemarch2025.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import org.springframework.web.bind.annotation.*;
 import com.brainstormapp.productservicemarch2025.service.FakeStoreProductService;
 
@@ -12,9 +13,9 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    private final FakeStoreProductService service;
+    private final ProductService service;
 
-    public ProductController(FakeStoreProductService inputService) {
+    public ProductController(@Qualifier("SelfProductService") ProductService inputService) {
         this.service = inputService;
     }
 
@@ -42,8 +43,4 @@ public class ProductController {
                 request.getImage(), request.getCategory().getCatTitle());
     }
 
-//    @GetMapping("/hello")
-//    public ResponseEntity<String> hello() {
-//        return ResponseEntity.status(HttpStatus.OK).body("Hello World");
-//    }
 }

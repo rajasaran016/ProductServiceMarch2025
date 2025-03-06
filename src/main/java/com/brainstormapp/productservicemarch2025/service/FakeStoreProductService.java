@@ -10,8 +10,8 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class FakeStoreProductService {
+@Service("FakeStoreProductService")
+public class FakeStoreProductService implements ProductService {
 
     private final RestTemplate restTemplate;
 
@@ -19,6 +19,7 @@ public class FakeStoreProductService {
         this.restTemplate = restTemplate;
     }
 
+    @Override
     public Product getProductById(Integer id) {
         Product product = new Product();
 
@@ -55,6 +56,7 @@ public class FakeStoreProductService {
         return product;
     }
 
+    @Override
     public List<Product> getAllProducts() {
 
         List<Product> products = new ArrayList<>();
@@ -80,10 +82,7 @@ public class FakeStoreProductService {
     }
 
 
-    public Product createProduct() {
-        return null;
-    }
-
+    @Override
     public Product createProduct(String title, String description, String image, String catTitle) {
 
         Product response = new Product();
