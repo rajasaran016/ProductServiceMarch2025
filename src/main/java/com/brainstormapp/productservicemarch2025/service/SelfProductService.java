@@ -55,9 +55,13 @@ public class SelfProductService implements ProductService {
         product.setCreatedAt(new Date());
         product.setUpdatedAt(new Date());
 
-        Category existingCategory = categoryRepo.findByTitle(catTitle).get();
-        if (existingCategory == null) {
+        Optional<Category> existingCategory = categoryRepo.findByTitle(catTitle);
+        if (existingCategory.isEmpty()) {
             category.setTitle(catTitle);
+            category.setCreatedAt(new Date());
+            category.setUpdatedAt(new Date());
+        }else{
+            category = existingCategory.get();
         }
         // saved category also.
         product.setCategory(category);
@@ -68,8 +72,17 @@ public class SelfProductService implements ProductService {
     }
 
     private void validateInputRequest(String title, String image, String catTitle, String description) {
-        if (title == null || title.isEmpty()) {
+        if (title == null ) {
             throw new IllegalArgumentException("Title cannot be null");
+        }
+        if (image == null) {
+            throw new IllegalArgumentException("Image cannot be null");
+        }
+        if (catTitle == null ) {
+            throw new IllegalArgumentException("CatTitle cannot be null");
+        }
+        if (description == null ) {
+            throw new IllegalArgumentException("Description cannot be null");
         }
     }
 
