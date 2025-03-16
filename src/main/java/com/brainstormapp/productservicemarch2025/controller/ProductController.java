@@ -7,6 +7,7 @@ import com.brainstormapp.productservicemarch2025.model.Product;
 import com.brainstormapp.productservicemarch2025.service.ProductService;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import com.brainstormapp.productservicemarch2025.service.FakeStoreProductService;
 
@@ -53,6 +54,12 @@ public class ProductController {
 
         return service.createProduct(request.getTitle(), request.getDescription(),
                 request.getImage(), request.getCategory().getCatTitle());
+    }
+
+    @GetMapping("/products/{pageNo}/{pageSize}")
+    public Page<Product> getProductsByPage(@PathVariable int pageNo, @PathVariable int pageSize) throws ProductListIsEmptyException {
+
+        return service.getAllProductsByPage(pageNo,pageSize);
     }
 
 }

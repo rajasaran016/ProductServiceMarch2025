@@ -6,6 +6,10 @@ import com.brainstormapp.productservicemarch2025.model.Category;
 import com.brainstormapp.productservicemarch2025.model.Product;
 import com.brainstormapp.productservicemarch2025.repository.CategoryRepo;
 import com.brainstormapp.productservicemarch2025.repository.ProductRepo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -69,6 +73,17 @@ public class SelfProductService implements ProductService {
         // Finally save to the DB.
         Product response = productRepo.save(product);
         return response;
+    }
+
+    @Override
+    public Page<Product> getAllProductsByPage(int page, int pageSize) throws ProductListIsEmptyException {
+
+        //Pageable pageable = PageRequest.of(page, pageSize);
+
+        String SortBy = "title";
+        Pageable pageable = PageRequest.of(page, pageSize, Sort.Direction.ASC, SortBy);
+
+        return productRepo.findAll(pageable);
     }
 
     private void validateInputRequest(String title, String image, String catTitle, String description) {

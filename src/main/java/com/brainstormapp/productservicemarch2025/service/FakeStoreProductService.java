@@ -1,8 +1,10 @@
 package com.brainstormapp.productservicemarch2025.service;
 
 import com.brainstormapp.productservicemarch2025.DTO.FakeStoreProductDTO;
+import com.brainstormapp.productservicemarch2025.exceptions.ProductListIsEmptyException;
 import com.brainstormapp.productservicemarch2025.model.Category;
 import com.brainstormapp.productservicemarch2025.model.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -107,5 +109,10 @@ public class FakeStoreProductService implements ProductService {
         //return product
         return response;
 
+    }
+
+    @Override
+    public Page<Product> getAllProductsByPage(int page, int pageSize) throws ProductListIsEmptyException {
+        return null;
     }
 }
